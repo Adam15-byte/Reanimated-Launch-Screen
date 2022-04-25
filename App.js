@@ -1,4 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
+import react, { useState, useRef, useEffect } from "react";
 import { StyleSheet, Text, View, FlatList } from "react-native";
 import Animated, {
   Extrapolate,
@@ -11,8 +12,15 @@ import { COLORS, SIZES, FONTS } from "./assets/consts";
 import { TitlesData } from "./assets/dummyData";
 import LogRegisterButton from "./src/components/LogRegisterButton";
 import AutomaticSwipeImages from "./src/components/AutomaticSwipeImages";
+import ImagesScatter from "./src/components/ImagesScatter";
 
 export default function App() {
+  const [isSecondScreen, setIsSecondScreen] = useState(false);
+  const onViewChangeRef = useRef(({ viewableItems, changed }) => {
+    if (viewableItems[0].index === 1) {
+      setIsSecondScreen(true);
+    }
+  });
   const translateX = useSharedValue(0);
   const scrollHandler = useAnimatedScrollHandler((event) => {
     translateX.value = event.contentOffset.x;
@@ -23,6 +31,7 @@ export default function App() {
       <View style={styles.singleScreenContainer}>
         <View style={styles.animationImagesContainer}>
           {index === 0 && <AutomaticSwipeImages />}
+          {index === 1 && <ImagesScatter isSecondScreen={isSecondScreen} />}
         </View>
         <View style={styles.titlesContainer}>
           <Text style={{ ...FONTS.h1 }}>{item.title}</Text>
@@ -81,6 +90,7 @@ export default function App() {
         bounces={false}
         keyExtractor={(_, index) => index}
         onScroll={scrollHandler}
+        onViewableItemsChanged={onViewChangeRef.current}
       />
       <View style={styles.bottomTabContainer}>
         <Dots />
