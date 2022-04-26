@@ -13,12 +13,16 @@ import { TitlesData } from "./assets/dummyData";
 import LogRegisterButton from "./src/components/LogRegisterButton";
 import AutomaticSwipeImages from "./src/components/AutomaticSwipeImages";
 import ImagesScatter from "./src/components/ImagesScatter";
+import DropDownImages from "./src/components/DropDownImages";
 
 export default function App() {
   const [isSecondScreen, setIsSecondScreen] = useState(false);
+  const [isThirdScreen, setIsThirdScreen] = useState(false);
   const onViewChangeRef = useRef(({ viewableItems, changed }) => {
     if (viewableItems[0].index === 1) {
       setIsSecondScreen(true);
+    } else if (viewableItems[0].index === 2) {
+      setIsThirdScreen(true);
     }
   });
   const translateX = useSharedValue(0);
@@ -32,6 +36,7 @@ export default function App() {
         <View style={styles.animationImagesContainer}>
           {index === 0 && <AutomaticSwipeImages />}
           {index === 1 && <ImagesScatter isSecondScreen={isSecondScreen} />}
+          {index === 2 && <DropDownImages isThirdScreen={isThirdScreen} />}
         </View>
         <View style={styles.titlesContainer}>
           <Text style={{ ...FONTS.h1 }}>{item.title}</Text>

@@ -13,3 +13,25 @@ export const tablets = [
   require("./images/tablet4.jpg"),
   require("./images/tablet5.jpg"),
 ];
+
+export const headphones = [
+  require("./images/headphones1.jpg"),
+  require("./images/headphones2.jpg"),
+  require("./images/headphones3.jpg"),
+  require("./images/headphones4.jpg"),
+  require("./images/headphones5.jpg"),
+  require("./images/headphones6.jpg"),
+  require("./images/headphones7.jpg"),
+  require("./images/headphones8.jpg"),
+];
+
+export const watches = [
+  require("./images/watch1.jpg"),
+  require("./images/watch2.jpg"),
+  require("./images/watch3.jpg"),
+  require("./images/watch4.jpg"),
+  require("./images/watch5.jpg"),
+  require("./images/watch6.jpg"),
+  require("./images/watch7.jpg"),
+  require("./images/watch8.jpg"),
+];
