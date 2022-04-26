@@ -14,15 +14,19 @@ import LogRegisterButton from "./src/components/LogRegisterButton";
 import AutomaticSwipeImages from "./src/components/AutomaticSwipeImages";
 import ImagesScatter from "./src/components/ImagesScatter";
 import DropDownImages from "./src/components/DropDownImages";
+import SquareUnfold from "./src/components/SquareUnfold";
 
 export default function App() {
   const [isSecondScreen, setIsSecondScreen] = useState(false);
   const [isThirdScreen, setIsThirdScreen] = useState(false);
+  const [isFourthScreen, setIsFourthScreen] = useState(false);
   const onViewChangeRef = useRef(({ viewableItems, changed }) => {
     if (viewableItems[0].index === 1) {
       setIsSecondScreen(true);
     } else if (viewableItems[0].index === 2) {
       setIsThirdScreen(true);
+    } else if (viewableItems[0].index === 3) {
+      setIsFourthScreen(true);
     }
   });
   const translateX = useSharedValue(0);
@@ -37,6 +41,7 @@ export default function App() {
           {index === 0 && <AutomaticSwipeImages />}
           {index === 1 && <ImagesScatter isSecondScreen={isSecondScreen} />}
           {index === 2 && <DropDownImages isThirdScreen={isThirdScreen} />}
+          {index === 3 && <SquareUnfold isFourthScreen={isFourthScreen} />}
         </View>
         <View style={styles.titlesContainer}>
           <Text style={{ ...FONTS.h1 }}>{item.title}</Text>
