@@ -34,4 +34,12 @@ export const watches = [
   require("./images/watch6.jpg"),
   require("./images/watch7.jpg"),
   require("./images/watch8.jpg"),
+  require("./images/watch9.jpg"),
+  require("./images/watch10.jpg"),
+];
+export const drones = [
+  require("./images/drone1.jpg"),
+  require("./images/drone2.jpg"),
+  require("./images/drone3.jpg"),
+  require("./images/drone4.jpg"),
 ];
