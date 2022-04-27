@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import react, { useState, useRef, useEffect } from "react";
+import react, { useState, useRef, useCallback } from "react";
 import { StyleSheet, Text, View, FlatList } from "react-native";
 import Animated, {
   Extrapolate,
@@ -17,6 +17,7 @@ import DropDownImages from "./src/components/DropDownImages";
 import SquareUnfold from "./src/components/SquareUnfold";
 
 export default function App() {
+  // handling of "onViewableItemsChanged" prop to determine the screen scrolled to
   const [isSecondScreen, setIsSecondScreen] = useState(false);
   const [isThirdScreen, setIsThirdScreen] = useState(false);
   const [isFourthScreen, setIsFourthScreen] = useState(false);
@@ -29,21 +30,26 @@ export default function App() {
       setIsFourthScreen(true);
     }
   });
+  // State to keep track of scrolling
   const translateX = useSharedValue(0);
   const scrollHandler = useAnimatedScrollHandler((event) => {
     translateX.value = event.contentOffset.x;
   });
-
+  // Render of the item for FlatList, representing single page
   const renderItem = ({ item, index }) => {
     return (
       <View style={styles.singleScreenContainer}>
         <View style={styles.animationImagesContainer}>
+          {/* Render of View with the animation depending on the index */}
+
           {index === 0 && <AutomaticSwipeImages />}
           {index === 1 && <ImagesScatter isSecondScreen={isSecondScreen} />}
           {index === 2 && <DropDownImages isThirdScreen={isThirdScreen} />}
           {index === 3 && <SquareUnfold isFourthScreen={isFourthScreen} />}
         </View>
         <View style={styles.titlesContainer}>
+          {/* Render of scrollable texts */}
+
           <Text style={{ ...FONTS.h1 }}>{item.title}</Text>
           <Text
             style={{
@@ -60,10 +66,12 @@ export default function App() {
       </View>
     );
   };
-  const Dots = () => {
+
+  // Dots animation below the title & subtitle texts
+  const Dots = useCallback(() => {
     return (
       <View style={styles.dotContainer}>
-        {TitlesData.map((item, index) => {
+        {TitlesData.map((_, index) => {
           const animatedDotStyle = useAnimatedStyle(() => {
             const opacity = interpolate(
               translateX.value,
@@ -86,7 +94,7 @@ export default function App() {
         })}
       </View>
     );
-  };
+  }, []);
   return (
     <View style={styles.container}>
       <Animated.FlatList

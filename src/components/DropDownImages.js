@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View, Image } from "react-native";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import Animated, { SlideInDown, SlideInUp } from "react-native-reanimated";
 import { watches } from "../../assets/imageArrays";
 import { AntDesign } from "@expo/vector-icons";
@@ -14,7 +14,7 @@ const DropDownImages = ({ isThirdScreen }) => {
     3: [],
   });
   // function to add an object to a single column
-  const addItemToWatchesColumns = (place, input) => {
+  const addItemToWatchesColumns = useCallback((place, input) => {
     // check to safe proof against adding more items than desired
     if (place === 0) if (watchesColumns[place].length >= 2) return;
     if (place === 1) if (watchesColumns[place].length >= 3) return;
@@ -24,10 +24,10 @@ const DropDownImages = ({ isThirdScreen }) => {
       ...prevState,
       [place]: [...prevState[place], input],
     }));
-  };
+  }, []);
 
   //function to filter through watches array and populate columns accordingly
-  const populateColumns = () => {
+  const populateColumns = useCallback(() => {
     watches.map((item, index) => {
       if (index === 0) addItemToWatchesColumns(0, item);
       if (index === 1) addItemToWatchesColumns(0, item);
@@ -40,17 +40,16 @@ const DropDownImages = ({ isThirdScreen }) => {
       if (index === 8) addItemToWatchesColumns(3, item);
       if (index === 9) addItemToWatchesColumns(3, item);
     });
-  };
+  }, []);
   //the function to populate columns should only be run when on the first render of this screen
   useEffect(() => {
     if (isThirdScreen === true) populateColumns();
   }, [isThirdScreen]);
 
-  const convertIndex = (index) => {
-    if (index === 0) return 2;
-    if (index === 1) return 1;
-    if (index === 2) return 0;
-  };
+  const convertIndex = useCallback((index) => {
+    const result = 2 - index;
+    return result;
+  }, []);
   return (
     <>
       {isThirdScreen === true && (

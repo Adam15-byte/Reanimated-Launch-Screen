@@ -1,5 +1,5 @@
-import { StyleSheet, Text, View, Image } from "react-native";
-import React, { useEffect } from "react";
+import { StyleSheet, View, Image } from "react-native";
+import React, { useEffect, useCallback } from "react";
 import { drones } from "../../assets/imageArrays";
 import Animated, {
   useAnimatedStyle,
@@ -9,6 +9,7 @@ import Animated, {
 } from "react-native-reanimated";
 
 const SquareUnfold = ({ isFourthScreen }) => {
+  // initial values for the screens transformation
   const translateX1 = useSharedValue(-150);
   const translateX2 = useSharedValue(0);
   const translateY2 = useSharedValue(-150);
@@ -35,25 +36,24 @@ const SquareUnfold = ({ isFourthScreen }) => {
       ],
     };
   });
-  const transform2 = () => {
+  const transform2 = useCallback(() => {
     translateX2.value = withTiming(150, { duration: 1000 });
     translateY2.value = withDelay(1100, withTiming(0, { duration: 1000 }));
     translateX2.value = withDelay(2200, withTiming(0, { duration: 1000 }));
-  };
-  const transform3 = () => {
+  }, []);
+  const transform3 = useCallback(() => {
     translateX3.value = withTiming(0, { duration: 1000 });
     translateY3.value = withDelay(1100, withTiming(0, { duration: 1000 }));
-  };
-
+  }, []);
   useEffect(() => {
     if (isFourthScreen) translateX1.value = withTiming(0, { duration: 1000 });
     if (isFourthScreen) transform2();
     if (isFourthScreen) transform3();
   }, [isFourthScreen]);
-  const indexTransformForZindex = (index) => {
+  const indexTransformForZindex = useCallback((index) => {
     const result = 4 - index;
     return result;
-  };
+  }, []);
   return (
     <View style={styles.container}>
       <View style={styles.upperRow}>
