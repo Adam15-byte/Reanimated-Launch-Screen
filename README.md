@@ -18,7 +18,7 @@ Project inspired by the launch screen done in "ByProgrammers" video.
 All components are self-made, some animations are different. All the animations are done in Reanimated 2.
 
 ## Technologies
-* React Native Reanimated
+* React Native Reanimated 2
 * Hooks: useEffect, useState, useCallback
 
 ## Videos
